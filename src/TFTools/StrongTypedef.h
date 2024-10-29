@@ -20,9 +20,8 @@
 struct D                                                                        \
 {                                                                               \
     T t;                                                                        \
-    constexpr explicit D(const T t_) : t(t_) {};                                \
+    constexpr explicit D(const T t_) : t(t_) {}                                 \
     D() = default;                                                              \
-    constexpr D& operator=(const D&) = default;                                 \
     constexpr D(const D& d) = default;                                          \
     D& operator=(const T& rhs) { t = rhs; return *this; }                       \
     explicit operator T() const { return t; }                                   \
