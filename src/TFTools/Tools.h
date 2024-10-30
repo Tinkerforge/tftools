@@ -19,6 +19,4 @@
 
 #pragma once
 
-#include "./TFTools/Micros.h"
-#include "./TFTools/Option.h"
-#include "./TFTools/Tools.h"
+[[gnu::noreturn]] void system_abort(const char *message);
