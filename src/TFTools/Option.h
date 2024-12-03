@@ -39,6 +39,22 @@ public:
         return expect("unwrapped Option without value!");
     }
 
+    bool try_unwrap(T *target) {
+        if (this->is_none())
+            return false;
+
+        *target = this->unwrap();
+        return true;
+    }
+
+    bool try_unwrap(T *target) const {
+        if (this->is_none())
+            return false;
+
+        *target = this->unwrap();
+        return true;
+    }
+
     T &unwrap_or(T &default_value) {
         if (!have_val)
             return default_value;
