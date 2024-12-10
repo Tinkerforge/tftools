@@ -21,35 +21,56 @@
 #pragma once
 
 #include <stdint.h>
+#include <type_traits>
 
 #include "./StrongTypedef.h"
 
+#define SINGLE_ARG(...) __VA_ARGS__
+
 STRONG_INTEGER_TYPEDEF(int64_t, micros_t,
-    constexpr inline uint32_t millis() const {return (uint32_t)(t / 1000); }
-    constexpr explicit operator float  () const { return (float) t; }
-    constexpr explicit operator double () const { return (double)t; }
+    // Necessary to be able to use ',' in the class implementation
+    SINGLE_ARG(
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return static_cast<T>(t);}
+    template <typename T> constexpr inline T to() { return T{t / static_cast<micros_t>(T{1ll}).t};}
+    )
 )
 
 STRONG_INTEGER_TYPEDEF(int64_t, millis_t,
-    constexpr operator micros_t () const { return micros_t{t * 1000}; }
+    SINGLE_ARG(
+    constexpr inline operator micros_t () const { return micros_t{t * 1000}; }
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return (T) t;}
+    template <typename T> constexpr inline T to() { return T{t / static_cast<millis_t>(T{1ll}).t};}
+    )
 )
 
 STRONG_INTEGER_TYPEDEF(int64_t, seconds_t,
-    constexpr operator micros_t () const { return micros_t{t * 1000 * 1000}; }
-    constexpr operator millis_t () const { return millis_t{t * 1000}; }
+    SINGLE_ARG(
+    constexpr inline operator micros_t () const { return micros_t{t * 1000 * 1000}; }
+    constexpr inline operator millis_t () const { return millis_t{t * 1000}; }
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return (T) t;}
+    template <typename T> constexpr inline T to() { return T{t / static_cast<seconds_t>(T{1ll}).t};}
+    )
 )
 
 STRONG_INTEGER_TYPEDEF(int64_t, minutes_t,
-    constexpr operator micros_t  () const { return micros_t{ t * 60 * 1000 * 1000}; }
-    constexpr operator millis_t  () const { return millis_t{ t * 60 * 1000}; }
-    constexpr operator seconds_t () const { return seconds_t{t * 60}; }
+    SINGLE_ARG(
+    constexpr inline operator micros_t  () const { return micros_t{ t * 60 * 1000 * 1000}; }
+    constexpr inline operator millis_t  () const { return millis_t{ t * 60 * 1000}; }
+    constexpr inline operator seconds_t () const { return seconds_t{t * 60}; }
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return (T) t;}
+    template <typename T> constexpr inline T to() { return T{t / static_cast<minutes_t>(T{1ll}).t};}
+    )
 )
 
 STRONG_INTEGER_TYPEDEF(int64_t, hours_t,
-    constexpr operator micros_t  () const { return micros_t{ t * 60 * 60 * 1000 * 1000}; }
-    constexpr operator millis_t  () const { return millis_t{ t * 60 * 60 * 1000}; }
-    constexpr operator seconds_t () const { return seconds_t{t * 60 * 60}; }
-    constexpr operator minutes_t () const { return minutes_t{t * 60}; }
+    SINGLE_ARG(
+    constexpr inline operator micros_t  () const { return micros_t{ t * 60 * 60 * 1000 * 1000}; }
+    constexpr inline operator millis_t  () const { return millis_t{ t * 60 * 60 * 1000}; }
+    constexpr inline operator seconds_t () const { return seconds_t{t * 60 * 60}; }
+    constexpr inline operator minutes_t () const { return minutes_t{t * 60}; }
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return (T) t;}
+    template <typename T> constexpr inline T to() { return T{t / static_cast<hours_t>(T{1ll}).t};}
+    )
 )
 
 // These do not clash with the C++14 standard literals for durations:
