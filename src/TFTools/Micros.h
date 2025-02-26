@@ -30,16 +30,16 @@
 STRONG_INTEGER_TYPEDEF(int64_t, micros_t,
     // Necessary to be able to use ',' in the class implementation
     SINGLE_ARG(
-    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return static_cast<T>(t);}
-    template <typename T> constexpr inline T to() { return T{t / static_cast<micros_t>(T{1ll}).t};}
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() const { return (T) t;}
+    template <typename T> constexpr inline T to() const { return T{t / static_cast<micros_t>(T{T{1ll}.t}).t};}
     )
 )
 
 STRONG_INTEGER_TYPEDEF(int64_t, millis_t,
     SINGLE_ARG(
     constexpr inline operator micros_t () const { return micros_t{t * 1000}; }
-    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return (T) t;}
-    template <typename T> constexpr inline T to() { return T{t / static_cast<millis_t>(T{1ll}).t};}
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() const { return (T) t;}
+    template <typename T> constexpr inline T to() const { return T{t / static_cast<millis_t>(T{T{1ll}.t}).t};}
     )
 )
 
@@ -47,8 +47,8 @@ STRONG_INTEGER_TYPEDEF(int64_t, seconds_t,
     SINGLE_ARG(
     constexpr inline operator micros_t () const { return micros_t{t * 1000 * 1000}; }
     constexpr inline operator millis_t () const { return millis_t{t * 1000}; }
-    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return (T) t;}
-    template <typename T> constexpr inline T to() { return T{t / static_cast<seconds_t>(T{1ll}).t};}
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() const { return (T) t;}
+    template <typename T> constexpr inline T to() const { return T{t / static_cast<seconds_t>(T{T{1ll}.t}).t};}
     )
 )
 
@@ -57,8 +57,8 @@ STRONG_INTEGER_TYPEDEF(int64_t, minutes_t,
     constexpr inline operator micros_t  () const { return micros_t{ t * 60 * 1000 * 1000}; }
     constexpr inline operator millis_t  () const { return millis_t{ t * 60 * 1000}; }
     constexpr inline operator seconds_t () const { return seconds_t{t * 60}; }
-    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return (T) t;}
-    template <typename T> constexpr inline T to() { return T{t / static_cast<minutes_t>(T{1ll}).t};}
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() const { return (T) t;}
+    template <typename T> constexpr inline T to() const { return T{t / static_cast<minutes_t>(T{T{1ll}.t}).t};}
     )
 )
 
@@ -68,8 +68,8 @@ STRONG_INTEGER_TYPEDEF(int64_t, hours_t,
     constexpr inline operator millis_t  () const { return millis_t{ t * 60 * 60 * 1000}; }
     constexpr inline operator seconds_t () const { return seconds_t{t * 60 * 60}; }
     constexpr inline operator minutes_t () const { return minutes_t{t * 60}; }
-    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() { return (T) t;}
-    template <typename T> constexpr inline T to() { return T{t / static_cast<hours_t>(T{1ll}).t};}
+    template <typename T> constexpr inline typename std::enable_if<std::is_fundamental<T>::value, T>::type as() const { return (T) t;}
+    template <typename T> constexpr inline T to() const { return T{t / static_cast<hours_t>(T{T{1ll}.t}).t};}
     )
 )
 
