@@ -86,10 +86,7 @@ STRONG_INTEGER_TYPEDEF(int64_t, hours_t,
 constexpr micros_t operator""_us   (unsigned long long int i) { return micros_t{(int64_t)i}; }
 constexpr millis_t operator""_ms   (unsigned long long int i) { return millis_t{(int64_t)i}; }
 constexpr seconds_t operator""_s   (unsigned long long int i) { return seconds_t{(int64_t)i}; }
-// _min would be nicer but confuses vscode
-// because Arduino.h defines _min to not
-// collide with std::min in case someone uses "using namespace std;" m(
-constexpr minutes_t operator""_m   (unsigned long long int i) { return minutes_t{(int64_t)i}; }
+constexpr minutes_t operator""_min (unsigned long long int i) { return minutes_t{(int64_t)i}; }
 constexpr hours_t operator""_h     (unsigned long long int i) { return hours_t{(int64_t)i}; }
 
 micros_t now_us();
